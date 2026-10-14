@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#b91e18">
+  <title>麦门度量衡 · 把世界量成麦麦</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="brand"><span class="brand-mark">↔</span><span>麦门度量衡</span></div>
+      <span class="top-note">一个非官方的趣味尺寸换算器</span>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">MCD SCALE / 001</p>
+          <h1>世界有多大？<br><em>用麦麦量一下。</em></h1>
+          <p class="intro">把书桌、行李箱，甚至你的键盘，换算成一排排餐品。餐品名称来自麦当劳 MCP；尺寸由你亲手校准。</p>
+          <div id="source-badge" class="source-badge" role="status">正在检查数据来源…</div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <span class="art-burger">🍔</span><span class="art-fries">🍟</span>
+          <span class="art-line">←────────→</span>
+          <span class="art-label">1 个“麦麦单位” = 你实测的长度</span>
+        </div>
+      </section>
+
+      <section class="workspace" aria-labelledby="form-title">
+        <div class="section-heading"><span class="step">01 / 开始测量</span><h2 id="form-title">设定你的两把尺</h2></div>
+        <div class="forms">
+          <div class="panel">
+            <div class="panel-heading"><span class="panel-icon">📦</span><div><h3>被测物体</h3><p>你想换算什么？</p></div></div>
+            <label for="object-name">物体名称</label>
+            <input id="object-name" type="text" maxlength="40" value="我的书桌" autocomplete="off">
+            <div class="dimensions">
+              <div><label for="object-length">长度 <b>必填</b></label><div class="number-field"><input id="object-length" type="number" min="0.01" step="any" value="120"><span>cm</span></div></div>
+              <div><label for="object-width">宽度 <small>选填</small></label><div class="number-field"><input id="object-width" type="number" min="0.01" step="any" placeholder="—"><span>cm</span></div></div>
+              <div><label for="object-height">高度 <small>选填</small></label><div class="number-field"><input id="object-height" type="number" min="0.01" step="any" placeholder="—"><span>cm</span></div></div>
+            </div>
+          </div>
+          <div class="equals" aria-hidden="true">≈</div>
+          <div class="panel reference-panel">
+            <div class="panel-heading"><span class="panel-icon">🍔</span><div><h3>麦麦标尺</h3><p>选餐品，量尺寸</p></div></div>
+            <label for="food-name">餐品名称</label>
+            <input id="food-name" type="text" list="food-options" maxlength="80" value="汉堡（演示）" autocomplete="off">
+            <datalist id="food-options"></datalist>
+            <div class="dimensions">
+              <div><label for="food-length">长度 <b>必填</b></label><div class="number-field"><input id="food-length" type="number" min="0.01" step="any" value="10"><span>cm</span></div></div>
+              <div><label for="food-width">宽度 <small>选填</small></label><div class="number-field"><input id="food-width" type="number" min="0.01" step="any" placeholder="—"><span>cm</span></div></div>
+              <div><label for="food-height">高度 <small>选填</small></label><div class="number-field"><input id="food-height" type="number" min="0.01" step="any" placeholder="—"><span>cm</span></div></div>
+            </div>
+            <p class="measure-note">标尺尺寸不会由 MCP 提供，填你实际量到的数字。演示值仅供试玩。</p>
+          </div>
+        </div>
+        <div class="action-row"><button id="calculate" class="primary" type="button">开始换算 <span>↗</span></button><p id="error" class="error" role="alert"></p></div>
+      </section>
+
+      <section id="result" class="result" aria-live="polite" hidden>
+        <div class="section-heading"><span class="step">02 / 换算结果</span><h2>麦麦宇宙的新单位</h2></div>
+        <div class="result-card">
+          <div class="result-overline">按照你输入的长度计算</div>
+          <div class="result-main"><span id="result-number">12</span><span class="result-unit">个 <strong id="result-food">汉堡</strong></span></div>
+          <p id="result-sentence" class="result-sentence"></p>
+          <div id="visual" class="visual" aria-hidden="true"></div>
+          <div id="extra-ratios" class="extra-ratios"></div>
+          <div class="result-bottom"><p>趣味换算；宽度、面积与体积按外接长方体估算，不代表真实堆放数量。</p><button id="copy" type="button">复制文案</button></div>
+        </div>
+      </section>
+    </main>
+    <footer><span>麦门度量衡 · 独立创作的趣味项目</span><span>产品与供应信息以麦当劳官方渠道为准</span></footer>
+  </div>
+</body>
+</html>
