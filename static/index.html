@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#b91e18">
+  <meta name="theme-color" content="#f5f2e9">
   <title>麦门度量衡 · 把世界量成麦麦</title>
   <link rel="stylesheet" href="/style.css">
   <script src="/app.js" defer></script>
@@ -18,9 +18,10 @@
     <main>
       <section class="hero">
         <div class="hero-copy">
-          <p class="eyebrow">MCD SCALE / 001</p>
-          <h1>世界有多大？<br><em>用麦麦量一下。</em></h1>
-          <p class="intro">把书桌、行李箱，甚至你的键盘，换算成一排排餐品。餐品名称来自麦当劳 MCP；尺寸由你亲手校准。</p>
+          <p class="eyebrow"><span class="eyebrow-dot"></span> 一把有点好吃的尺 · MCD SCALE</p>
+          <h1>给万物一把<br><em>麦麦标尺。</em></h1>
+          <p class="intro">桌子有几个汉堡长？行李箱能排下多少份薯条？选一个餐品，量好尺寸，看看熟悉的东西换个单位是什么样。</p>
+          <a class="hero-cta" href="#form-title">开始换算 <span aria-hidden="true">↗</span></a>
           <div class="connection-row"><div id="source-badge" class="source-badge" role="status">正在检查数据来源…</div><button id="connect-toggle" class="connect-toggle" type="button" hidden>连接 MCP</button></div>
           <form id="connect-form" class="connect-form" hidden>
             <label for="mcp-token">麦当劳 MCP Token</label>
@@ -30,18 +31,22 @@
           </form>
         </div>
         <div class="hero-art" aria-hidden="true">
-          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
-          <span class="art-burger">🍔</span><span class="art-fries">🍟</span>
-          <span class="art-line">←────────→</span>
-          <span class="art-label">1 个“麦麦单位” = 你实测的长度</span>
+          <div class="diagram-head"><span>换算示意</span><span>HOW IT WORKS / 001</span></div>
+          <div class="diagram">
+            <div class="diagram-item"><span class="diagram-icon object-icon">▤</span><span class="diagram-label">一张书桌</span><strong>120 <small>cm</small></strong></div>
+            <div class="diagram-rule"><span></span><i>÷</i><span></span></div>
+            <div class="diagram-item"><span class="diagram-icon food-icon">🍔</span><span class="diagram-label">一个餐品</span><strong>10 <small>cm</small></strong></div>
+            <div class="diagram-answer"><span>所以，它大约有</span><div><strong>12</strong><span>个餐品长 <b>↗</b></span></div></div>
+          </div>
+          <p class="diagram-note">数字仅为演示，餐品尺寸由你实测</p>
         </div>
       </section>
 
       <section class="workspace" aria-labelledby="form-title">
-        <div class="section-heading"><span class="step">01 / 开始测量</span><h2 id="form-title">设定你的两把尺</h2></div>
+        <div class="section-heading"><div><span class="step">01 / 开始测量</span><h2 id="form-title">选好两把尺，开始脑洞</h2></div><p>先填长度；宽度和高度可以让换算更立体。</p></div>
         <div class="forms">
           <div class="panel">
-            <div class="panel-heading"><span class="panel-icon">📦</span><div><h3>被测物体</h3><p>你想换算什么？</p></div></div>
+            <div class="panel-heading"><span class="panel-index">A</span><div><h3>你要量什么</h3><p>书桌、键盘，或者任何东西</p></div></div>
             <label for="object-name">物体名称</label>
             <input id="object-name" type="text" maxlength="40" value="我的书桌" autocomplete="off">
             <div class="dimensions">
@@ -50,9 +55,9 @@
               <div><label for="object-height">高度 <small>选填</small></label><div class="number-field"><input id="object-height" type="number" min="0.01" step="any" placeholder="—"><span>cm</span></div></div>
             </div>
           </div>
-          <div class="equals" aria-hidden="true">≈</div>
+          <div class="equals" aria-hidden="true"><span>÷</span></div>
           <div class="panel reference-panel">
-            <div class="panel-heading"><span class="panel-icon">🍔</span><div><h3>麦麦标尺</h3><p>选餐品，量尺寸</p></div></div>
+            <div class="panel-heading"><span class="panel-index">B</span><div><h3>用什么当标尺</h3><p>选餐品，再填你量到的尺寸</p></div></div>
             <label for="food-name">餐品名称</label>
             <input id="food-name" type="text" list="food-options" maxlength="80" value="汉堡（演示）" autocomplete="off">
             <datalist id="food-options"></datalist>
@@ -64,13 +69,13 @@
             <p class="measure-note">标尺尺寸不会由 MCP 提供，填你实际量到的数字。演示值仅供试玩。</p>
           </div>
         </div>
-        <div class="action-row"><button id="calculate" class="primary" type="button">开始换算 <span>↗</span></button><p id="error" class="error" role="alert"></p></div>
+        <div class="action-row"><button id="calculate" class="primary" type="button">看看有多少个 <span aria-hidden="true">→</span></button><p id="error" class="error" role="alert"></p></div>
       </section>
 
       <section id="result" class="result" aria-live="polite" hidden>
-        <div class="section-heading"><span class="step">02 / 换算结果</span><h2>麦麦宇宙的新单位</h2></div>
+        <div class="section-heading"><div><span class="step">02 / 换算结果</span><h2>换个单位，换个视角</h2></div></div>
         <div class="result-card">
-          <div class="result-overline">按照你输入的长度计算</div>
+          <div class="result-overline">你的麦麦换算结果 <span>↗</span></div>
           <div class="result-main"><span id="result-number">12</span><span class="result-unit">个 <strong id="result-food">汉堡</strong></span></div>
           <p id="result-sentence" class="result-sentence"></p>
           <div id="visual" class="visual" aria-hidden="true"></div>

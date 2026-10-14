@@ -41,7 +41,20 @@ function calculate() {
 
     const icon = unitEmoji(foodName);
     const count = Math.min(12, Math.max(1, Math.round(length)));
-    $("visual").textContent = icon.repeat(count) + (length > 12 ? " …" : "");
+    const visual = $("visual");
+    visual.replaceChildren();
+    for (let index = 0; index < count; index++) {
+      const unit = document.createElement("span");
+      unit.className = "visual-unit";
+      unit.textContent = icon;
+      visual.append(unit);
+    }
+    if (length > 12) {
+      const more = document.createElement("span");
+      more.className = "visual-more";
+      more.textContent = "还有更多…";
+      visual.append(more);
+    }
 
     const extras = [];
     if (obj[1] !== null && food[1] !== null) {
