@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import csv
 from collections.abc import Iterable
 from typing import Any
 
@@ -15,6 +16,26 @@ NAME_KEYS = {
     "name", "foodname", "productname", "itemname", "mealname", "chinesename",
     "food_name", "product_name", "item_name", "meal_name", "餐品名称", "名称",
 }
+
+
+def _toon_names(value: str) -> Iterable[str]:
+    """Read the product-name column from McDonald's documented TOON table."""
+    header = re.search(r"\[\d+\]\{([^}]+)\}:\s*\n", value)
+    if not header:
+        return
+    fields = [field.strip().lower() for field in header.group(1).split(",")]
+    index = next((i for i, field in enumerate(fields) if field in NAME_KEYS), None)
+    if index is None:
+        return
+    for line in value[header.end():].splitlines():
+        if not line.strip():
+            continue
+        columns = next(csv.reader([line.strip()], skipinitialspace=True))
+        if len(columns) <= index:
+            continue
+        name = columns[index].strip()
+        if 1 < len(name) <= 80:
+            yield name
 
 
 def _walk_names(value: Any) -> Iterable[str]:
@@ -33,6 +54,7 @@ def _walk_names(value: Any) -> Iterable[str]:
         try:
             decoded = json.loads(value)
         except json.JSONDecodeError:
+            yield from _toon_names(value)
             for match in re.finditer(r"(?:餐品名称|商品名称)\s*[:：]\s*([^\n,，;；]+)", value):
                 yield match.group(1).strip()
         else:

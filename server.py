@@ -19,6 +19,18 @@ STATIC = ROOT / "static"
 DEMO_FOODS = ["汉堡（演示）", "薯条（演示）", "麦乐鸡（演示）"]
 
 
+def safe_error_summary(exc: BaseException) -> str:
+    """Show useful failure types and status codes without logging credentials."""
+    if isinstance(exc, BaseExceptionGroup):
+        return ", ".join(safe_error_summary(child) for child in exc.exceptions)
+    status = getattr(getattr(exc, "response", None), "status_code", None)
+    if status is not None:
+        return f"{type(exc).__name__} HTTP {status}"
+    if isinstance(exc, RuntimeError) and str(exc).startswith(("MCP 已返回数据", "MCP 服务未提供", "MCP 工具")):
+        return str(exc)
+    return type(exc).__name__
+
+
 class Handler(BaseHTTPRequestHandler):
     session_token: str | None = None
     session_foods: list[str] | None = None
@@ -51,7 +63,7 @@ class Handler(BaseHTTPRequestHandler):
                 foods = asyncio.run(fetch_food_names(token))
             except Exception as exc:
                 # Never return exception text: transport errors may contain sensitive data.
-                print(f"MCP request failed: {type(exc).__name__}")
+                print(f"MCP request failed: {safe_error_summary(exc)}")
                 self._json(502, {"error": "MCP 餐品读取失败，请检查 Token、网络和终端日志"})
                 return
             self._json(200, {"source": "mcp", "foods": foods})
@@ -95,7 +107,7 @@ class Handler(BaseHTTPRequestHandler):
         try:
             foods = asyncio.run(fetch_food_names(token))
         except Exception as exc:
-            print(f"MCP connection failed: {type(exc).__name__}")
+            print(f"MCP connection failed: {safe_error_summary(exc)}")
             self._json(502, {"error": "连接失败，请检查 Token 和网络后重试"})
             return
         with self.session_lock:

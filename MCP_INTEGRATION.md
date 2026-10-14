@@ -14,7 +14,7 @@
 1. 浏览器向本地 `GET /api/foods` 请求餐品选项。无 Token 时显示演示名称；用户可通过本机 `POST /api/connect` 验证一次性输入的 Token。
 2. 本机 `server.py` 调用 `mcd_client.py`，使用 MCP Python SDK 建立 Streamable HTTP 会话，完成 `initialize` 和 `tools/list`。
 3. 确认服务端确实提供 `list-nutrition-foods` 后，执行 `tools/call`，参数为空对象。
-4. 从工具返回的结构化内容或文本内容提取餐品名称，返回浏览器。返回给浏览器的只有名称，不含 Token 和完整营养记录。
+4. 从工具返回的结构化内容或文本内容提取餐品名称。官方营养数据的 `data` 字段采用 TOON 表格格式，因此解析器按表头中的 `productName` 列读取名称。返回给浏览器的只有名称，不含 Token 和完整营养记录。
 5. 用户输入自己实测的餐品尺寸和物体尺寸。浏览器本地做换算，不再调用 MCP。
 
 ## 业务价值与边界

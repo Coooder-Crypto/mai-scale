@@ -23,6 +23,11 @@ class ScaleTests(unittest.TestCase):
         )
         self.assertEqual(extract_food_names(result), ["巨无霸", "薯条"])
 
+    def test_extracts_documented_toon_payload(self):
+        toon = "[2]{productName,nutritionDescription,energyKj}:\n  猪柳麦满分,null,1288\n  巨无霸,null,2000\n"
+        result = SimpleNamespace(structured_content={"data": toon}, content=[])
+        self.assertEqual(extract_food_names(result), ["巨无霸", "猪柳麦满分"])
+
 
 if __name__ == "__main__":
     unittest.main()
