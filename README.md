@@ -29,10 +29,12 @@ python3 server.py
 
 1. 在[麦当劳 MCP 开放平台](https://open.mcd.cn/mcp)使用手机号登录，在控制台激活并获取 Token。
 2. 在项目目录安装依赖：`uv sync`。如果没有 uv，可运行 `python3 -m pip install -e .`。
-3. 仅在本机终端设置 `MCD_MCP_TOKEN` 环境变量，再运行 `uv run python server.py`（或已安装依赖的 `python3 server.py`）。
+3. 运行 `uv run python server.py`（或已安装依赖的 `python3 server.py`），在本地页面点击“连接 MCP”，粘贴 Token 并验证。
 4. 页面顶部出现“已连接麦当劳 MCP”后，从餐品下拉建议中选择一项，并填写自己量到的尺寸。
 
-Token 只在本机服务端读取，不会写入页面或提交到仓库。不要在截图、终端历史、Issue 或公开配置中展示 Token。服务只监听 `127.0.0.1`。
+也可以仅在本机终端设置 `MCD_MCP_TOKEN` 环境变量后启动服务，或运行 `uv run python cli.py foods` 检查餐品名称。
+
+页面输入的 Token 只发往 `127.0.0.1` 上的本机服务，验证后仅保存在服务进程内存，关闭服务即清除；不会写入文件、浏览器本地存储或 GitHub 仓库。不要在截图、终端历史、Issue 或公开配置中展示 Token。服务只监听 `127.0.0.1`。
 
 ## 使用示例
 

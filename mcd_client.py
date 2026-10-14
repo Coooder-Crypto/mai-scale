@@ -56,8 +56,8 @@ def extract_food_names(result: Any) -> list[str]:
     return sorted(names, key=lambda name: name.casefold())
 
 
-async def fetch_food_names() -> list[str]:
-    token = os.environ.get("MCD_MCP_TOKEN", "").strip()
+async def fetch_food_names(token: str | None = None) -> list[str]:
+    token = (token or os.environ.get("MCD_MCP_TOKEN", "")).strip()
     if not token:
         raise RuntimeError("未配置 MCD_MCP_TOKEN")
 

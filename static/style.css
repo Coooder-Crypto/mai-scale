@@ -20,6 +20,14 @@ h1 em { color:var(--red); font-style:normal; }
 .source-badge { display:inline-flex; align-items:center; padding:9px 14px; border:1px solid #e3cdaa; border-radius:100px; background:#fff3d3; color:#765820; font-size:13px; font-weight:700; }
 .source-badge.connected { background:#eaf8e9; border-color:#b5ddaf; color:#28632a; }
 .source-badge.failed { background:#fff0ed; border-color:#e6aaa1; color:#9f2519; }
+.connection-row { display:flex; align-items:center; flex-wrap:wrap; gap:12px; }
+.connect-toggle { padding:9px 14px; border:1px solid var(--red); border-radius:100px; background:transparent; color:var(--red); font-size:13px; font-weight:800; }
+.connect-form { max-width:480px; margin-top:18px; padding:18px; border:1px solid var(--line); border-radius:14px; background:white; }
+.connect-form[hidden],.connect-toggle[hidden] { display:none; }
+.connect-fields { display:flex; gap:8px; }
+.connect-fields button { flex:none; padding:0 14px; border:0; border-radius:9px; background:var(--red); color:white; font-size:13px; font-weight:800; }
+.connect-fields button:disabled { opacity:.6; cursor:wait; }
+.connect-form p { margin:10px 0 0; color:#766c65; font-size:12px; line-height:1.5; }
 .hero-art { min-height:510px; position:relative; display:grid; place-items:center; background:var(--yellow); overflow:hidden; }
 .hero-art::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 50% 43%,#ffe894 0,#ffd24f 56%,#f2bc29 100%); }
 .orbit { position:absolute; width:340px; height:340px; border:2px solid #a76e312f; border-radius:50%; transform:rotate(-16deg) scaleX(1.45); }

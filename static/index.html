@@ -21,7 +21,13 @@
           <p class="eyebrow">MCD SCALE / 001</p>
           <h1>世界有多大？<br><em>用麦麦量一下。</em></h1>
           <p class="intro">把书桌、行李箱，甚至你的键盘，换算成一排排餐品。餐品名称来自麦当劳 MCP；尺寸由你亲手校准。</p>
-          <div id="source-badge" class="source-badge" role="status">正在检查数据来源…</div>
+          <div class="connection-row"><div id="source-badge" class="source-badge" role="status">正在检查数据来源…</div><button id="connect-toggle" class="connect-toggle" type="button" hidden>连接 MCP</button></div>
+          <form id="connect-form" class="connect-form" hidden>
+            <label for="mcp-token">麦当劳 MCP Token</label>
+            <div class="connect-fields"><input id="mcp-token" type="password" autocomplete="off" placeholder="粘贴 Token，不会保存到文件"><button type="submit">验证连接</button></div>
+            <p>Token 只发送给本机 127.0.0.1 服务，验证后仅保存在进程内存；关闭服务即清除。</p>
+            <p id="connect-error" class="error" role="alert"></p>
+          </form>
         </div>
         <div class="hero-art" aria-hidden="true">
           <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>

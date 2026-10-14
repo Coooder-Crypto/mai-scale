@@ -89,6 +89,7 @@ async function loadFoods() {
     badge.textContent = dataSource === "mcp"
       ? `● 已连接麦当劳 MCP · ${data.foods.length} 个餐品名称` : "○ 演示模式 · 尚未连接麦当劳 MCP";
     badge.classList.toggle("connected", dataSource === "mcp");
+    $("connect-toggle").hidden = dataSource === "mcp";
     if (dataSource === "mcp" && $("food-name").value === "汉堡（演示）") {
       $("food-name").value = "";
       $("food-length").value = "";
@@ -98,6 +99,38 @@ async function loadFoods() {
     badge.classList.add("failed");
   }
 }
+
+$("connect-toggle").addEventListener("click", () => {
+  $("connect-form").hidden = !$("connect-form").hidden;
+  if (!$("connect-form").hidden) $("mcp-token").focus();
+});
+$("connect-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const tokenInput = $("mcp-token");
+  const button = $("connect-form").querySelector("button");
+  const error = $("connect-error");
+  error.textContent = "";
+  button.disabled = true;
+  button.textContent = "连接中…";
+  try {
+    const response = await fetch("/api/connect", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ token: tokenInput.value.trim() }),
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || "连接失败");
+    tokenInput.value = "";
+    $("connect-form").hidden = true;
+    await loadFoods();
+  } catch (e) {
+    tokenInput.value = "";
+    error.textContent = e.message;
+  } finally {
+    button.disabled = false;
+    button.textContent = "验证连接";
+  }
+});
 
 $("calculate").addEventListener("click", calculate);
 $("copy").addEventListener("click", async () => {
